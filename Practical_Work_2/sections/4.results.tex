@@ -1,0 +1,37 @@
+\section{Results}
+\subsection{Training and validation MAE}
+Figure~\ref{fig:mae_curve} shows the MAE curves for training and validation sets across epochs.
+The best validation MAE achieved by our ResNet-18 regression model is 11.315 mm at epoch 18.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{mae_curve.png}
+  \caption{Train vs. validation MAE (mm) across epochs.}
+  \label{fig:mae_curve}
+\end{figure}
+
+\subsection{Hyperparameter experiments}
+Table~\ref{tab:hp} summarizes a small hyperparameter study.
+We vary learning rate, input size, and weight decay and report validation MAE.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Run & Input size & LR & Weight decay & Val MAE (mm) \\
+\midrule
+Baseline & 256 & 3e-4 & 1e-4 & 11.0577 \\
+A1 & 224 & 3e-4 & 1e-4 & 11.3004 \\
+A2 & 256 & 1e-4 & 1e-4 & 11.8807 \\
+A3 & 256 & 3e-4 & 0 & 12.3811 \\
+\bottomrule
+\end{tabular}
+\caption{Validation MAE for different hyperparameter settings.}
+\label{tab:hp}
+\end{table}
+
+\subsection{Comparison to the benchmark/leaderboard}
+The HC18 benchmark often evaluates methods that first predict the head boundary and then compute HC using segmentation and ellipse fitting.
+In our work, we predict HC directly with a regression model, so the results are not perfectly comparable to those benchmark methods.
+However, MAE in millimeters is still a useful and clear metric.
+Therefore, we report the MAE on our validation split as a practical estimate of model performance.

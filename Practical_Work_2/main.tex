@@ -1,0 +1,61 @@
+%============================================================
+% main.tex — IEEEtran split template (HC18 + ResNet18 Regression)
+%============================================================
+\documentclass[conference]{IEEEtran}
+
+% -------------------- Packages --------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{cite}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+% Figures folder
+\graphicspath{{figure/}}
+
+% -------------------- Title --------------------
+\title{Fetal Head Circumference Measurement from Ultrasound (HC18)\\
+ResNet-18 Regression with MAE Evaluation}
+
+\author{
+\IEEEauthorblockN{Nguyen The Cuong}
+\IEEEauthorblockN{22BA13058}
+\IEEEauthorblockA{
+Machine Learning in Medicine 2026\\
+University of Science and Technology of Hanoi (USTH)\\
+Email: cuongnt.22ba13058@usth.edu.vn
+}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+
+\begin{document}
+\maketitle
+
+% Abstract + Keywords
+\input{sections/abstract}
+
+% Main sections
+\input{sections/1.introduction}
+\input{sections/2.dataset}
+\input{sections/3.methods}
+\input{sections/4.results}
+\input{sections/5.discussion}
+\input{sections/6.conclusion and future work}
+
+% References
+\input{sections/references}
+
+\end{document}

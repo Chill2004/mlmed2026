@@ -1,0 +1,12 @@
+\section{Discussion}
+From our experiments, we find that accuracy depends a lot on image quality and how clearly the skull boundary can be seen.
+Some images contain strong speckle noise, low contrast around the skull edge, or only part of the head, which makes prediction more difficult.
+In addition, different acquisition settings and zoom levels can change the scale of the image.
+
+One important design choice in our model is to include the pixel size (mm/pixel) as an input feature.
+If pixel size is not provided, the model must guess the real-world scale only from the image appearance, and this can be unreliable when zoom changes.
+By concatenating pixel size with CNN features, the model can better predict HC in real units (mm).
+
+A limitation of our regression approach is that it is less interpretable than segmentation-based pipelines.
+With segmentation and ellipse fitting, we can visualize the predicted boundary, which is easier to check and may generalize better in some situations.
+In the future, performance could be improved by using stronger but anatomically safe augmentations, applying more robust cropping of the ultrasound fan region, and using multi-task learning to predict both HC and a coarse boundary representation.

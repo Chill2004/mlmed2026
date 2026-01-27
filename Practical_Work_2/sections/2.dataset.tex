@@ -1,0 +1,41 @@
+\section{Dataset (HC18)}
+We use the HC18 dataset, which includes 2D grayscale ultrasound images captured on the standard fetal head plane.
+For each image, the dataset provides the pixel size in mm/pixel, which reflects the physical scale of the scan.
+In the training set, ground-truth head circumference (HC) values in millimeters are also available, together with an annotation mask that represents an ellipse along the head boundary.
+
+
+\subsection{Data organization}
+The dataset is organized as:
+\begin{itemize}
+  \item \texttt{training\_set}: \texttt images and ellipse masks
+  \item \texttt{test\_set}: \texttt images (no HC labels)
+  \item \texttt{training\_set\_pixel\_size\_and\_HC.csv}: filename, pixel size (mm/pixel), head circumference (mm)
+  \item \texttt{test\_set\_pixel\_size.csv}: filename, pixel size (mm/pixel)
+\end{itemize}
+
+\subsection{Exploration}
+We compute descriptive statistics from the training CSV:
+\begin{itemize}
+  \item Number of training images: 999
+  \item Number of test images: 333
+  \item HC(mm): min=44.3000, max=346.4000, mean=174.3831, std=65.2821
+  \item Pixel size(mm/pixel): min=0.049415, max=0.393280, mean=0.139846, std=0.053005
+\end{itemize}
+
+\subsection{Qualitative examples}
+Figure~\ref{fig:samples} shows sample ultrasound images with the provided ellipse annotation overlaid.
+Figure~\ref{fig:hchist} shows the distribution of HC values in the training set.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{sample_overlay_grid.png}
+  \caption{Example training images with ellipse annotation overlay.}
+  \label{fig:samples}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{hc_hist.png}
+  \caption{Distribution of head circumference (mm) in the training set.}
+  \label{fig:hchist}
+\end{figure}

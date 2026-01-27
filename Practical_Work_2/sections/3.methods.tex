@@ -1,0 +1,40 @@
+\section{Methods}
+\subsection{Problem formulation}
+Given an ultrasound image $I$ and its pixel size $s$ (mm/pixel), the goal is to predict head circumference $\hat{y}$ in millimeters.
+We train using mean absolute error (MAE), equivalent to L1 loss:
+\[
+\mathcal{L} = \frac{1}{N}\sum_{i=1}^{N} \left|\hat{y}_i - y_i\right|.
+\]
+
+\subsection{Preprocessing}
+Ultrasound frames often include black borders and non-informative areas outside the scanning region.
+We apply:
+\begin{itemize}
+  \item \textbf{Auto-cropping:} remove near-black borders by cropping the non-black region
+  \item \textbf{Resizing:} resize to a fixed input resolution (e.g., $256\times256$)
+  \item \textbf{Normalization:} scale intensities to $[0,1]$
+\end{itemize}
+
+\subsection{Model architecture (ResNet-18 regression)}
+We use ResNet-18 as the main backbone and adjust the first convolution layer so it can take one-channel (grayscale) ultrasound images.
+After the backbone, global average pooling is used to extract a compact feature vector that summarizes the image.
+Because HC is measured in millimeters and depends on image scale, we also include the pixel size $s$ as additional input.
+We concatenate $s$ with the image feature vector and feed the combined representation into a small MLP regression head to predict HC in mm.
+
+
+\subsection{Training details}
+We split the training set into train/validation subsets using an 80/20 split with a fixed random seed.
+We train using Adam and monitor validation MAE.
+
+\begin{itemize}
+  \item Input size: \textbf 256
+  \item Batch size: \textbf 32
+  \item Learning rate: \textbf 0.0003
+  \item Weight decay: \textbf 0.0001
+  \item Epochs: \textbf 20
+  \item Augmentation (optional): random flip and small rotations
+\end{itemize}
+
+\subsection{Evaluation protocol}
+We report MAE on the internal validation split.
+We plot both training MAE and validation MAE across epochs to diagnose underfitting/overfitting.

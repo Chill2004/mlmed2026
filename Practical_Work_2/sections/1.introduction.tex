@@ -1,0 +1,9 @@
+\section{Introduction}
+Fetal head circumference (HC) is a common measurement in pregnancy ultrasound because it helps doctors monitor fetal growth and make clinical decisions.
+Normally, HC is measured by choosing the correct head view and fitting an ellipse along the skull boundary.
+However, this manual process takes time and the results may differ between operators.
+
+In this lab, we build one machine learning/deep learning model to predict fetal head circumference directly from ultrasound images using a regression approach.
+We use the HC18 dataset and evaluate the model with mean absolute error (MAE) in millimeters.
+Our method is based on a ResNet-18 network adapted for grayscale ultrasound images.
+In addition, we include the pixel size (mm/pixel) as an input so the model can handle different image scales and produce HC values in real units.
