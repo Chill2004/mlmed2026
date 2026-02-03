@@ -1,0 +1,18 @@
+\section{Dataset}
+We use the COVID-QU-Ex dataset for infection segmentation. Each sample contains a grayscale chest X-ray image and a corresponding infection mask. The mask indicates the infection region using pixel-level labels.
+
+\subsection{Subset Choice (COVID-only)}
+The full dataset contains several categories (COVID-19, Non-COVID, Normal) and standard splits (Train/Val/Test). Due to the large size of the full dataset and limited computing resources, we choose to train and evaluate using only the \textbf{COVID-19 subset}. 
+
+\subsection{Preprocessing}
+All images and masks are resized to $256\times256$. Images are normalized to the range $[0,1]$. Masks are binarized using a threshold of 0.5 (infection vs background).
+
+\subsection{Visual Check}
+We first visualize random samples to confirm that images and masks are aligned correctly. Figure~\ref{fig:overlay_check} shows an example of a chest X-ray with the infection mask overlay.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{figure/example.png}
+\caption{Example overlay of infection mask on a COVID-19 chest X-ray.}
+\label{fig:overlay_check}
+\end{figure}

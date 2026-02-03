@@ -1,0 +1,7 @@
+\begin{abstract}
+This report studies infection region segmentation for COVID-19 chest X-ray images using the COVID-QU-Ex dataset. The goal is to predict a binary mask that highlights the infection area in each input image. Because the dataset is large, we only use the COVID-19 subset for training and evaluation. We implement a U-Net segmentation model and train it with binary cross-entropy loss. We evaluate the model mainly with training curves and Root Mean Squared Error (RMSE) on both training and validation sets. The results show that U-Net can learn meaningful infection patterns, but the segmentation quality is still affected by class imbalance and unclear boundaries in X-ray images.
+\end{abstract}
+
+\begin{IEEEkeywords}
+COVID-19, chest X-ray, segmentation, U-Net, COVID-QU-Ex, RMSE
+\end{IEEEkeywords}

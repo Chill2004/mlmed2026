@@ -1,0 +1,16 @@
+\section{Methods}
+\subsection{Model Architecture}
+We use U-Net, a popular encoder-decoder network for medical image segmentation. The encoder extracts features at different scales, and the decoder upsamples the features back to the original size. Skip connections are used to combine low-level spatial information with high-level semantic features.
+
+The model input is a single-channel chest X-ray image, and the output is a probability map (same resolution) representing infection likelihood for each pixel.
+
+\subsection{Training Setup}
+We train the model using the Adam optimizer with learning rate $10^{-4}$ and batch size 8. We train for a fixed number of epochs. The loss function is binary cross-entropy.
+
+\subsection{Evaluation Metric: RMSE}
+In this report, we mainly use RMSE because it is easy to track and compare across training and validation. RMSE is computed between the predicted probability mask and the ground-truth binary mask:
+\begin{equation}
+\mathrm{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(p_i - y_i)^2},
+\end{equation}
+where $p_i$ is the predicted probability for pixel $i$ and $y_i$ is the ground truth label.
+We report RMSE for training and validation across epochs and also report test RMSE after training.

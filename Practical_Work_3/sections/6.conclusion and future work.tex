@@ -1,0 +1,10 @@
+\section{Conclusion and Future Work}
+In this practical work, we implemented a U-Net model for COVID-19 infection segmentation on chest X-ray images using the COVID-QU-Ex dataset. To reduce the dataset size, we trained only on the COVID-19 subset. We evaluated the model mainly using training curves and RMSE on training, validation, and test splits.
+
+For future work, we can improve the project in several ways:
+\begin{itemize}
+  \item Add data augmentation (flip, rotation, brightness) to improve generalization.
+  \item Try stronger losses for imbalanced segmentation, such as Dice loss or focal loss.
+  \item Train with more categories (Non-COVID and Normal) if more resources are available.
+  \item Report more segmentation metrics such as Dice and IoU for better comparison.
+\end{itemize}

@@ -1,0 +1,46 @@
+\section{Results}
+
+\subsection{Training Curves}
+Figure~\ref{fig:loss_curve} reports the evolution of the training and validation loss over epochs, while Figure~\ref{fig:rmse_curve} shows the corresponding RMSE. Overall, both metrics decrease steadily, indicating that the model continues to learn meaningful representations throughout training. The validation curves closely track the training curves, suggesting stable generalization and no clear evidence of overfitting within the trained epoch range.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{figure/loss.png}
+\caption{Training and validation loss across epochs. }
+\label{fig:loss_curve}
+\end{figure}
+A consistent downward trend indicates effective optimization.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{figure/rmse.png}
+\caption{Training and validation RMSE across epochs. }
+\label{fig:rmse_curve}
+\end{figure}
+Both curves decrease and remain close, indicating stable learning and generalization.
+
+\subsection{Test Performance}
+After training, we evaluate the model on the COVID-19 test split. The final test performance is summarized below:
+\begin{itemize}
+  \item \textbf{Test RMSE:} \textbf{0.2288}
+\end{itemize}
+
+\subsection{Qualitative Segmentation Results}
+To complement quantitative metrics, we visualize representative predictions. Figure~\ref{fig:qualitative_comp} shows an example consisting of the input X-ray, the ground-truth mask, and the predicted mask (thresholded at 0.5). The model captures the main infected regions and their coarse shapes, while remaining errors typically appear as small isolated false positives and minor boundary mismatches.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{figure/segmentation.png}
+\caption{Qualitative comparison: input X-ray (left), ground-truth mask (middle), and predicted mask (right) at threshold 0.5.}
+\label{fig:qualitative_comp}
+\end{figure}
+
+For additional interpretability, Figure~\ref{fig:overlay_pred} overlays the predicted infection region on the original X-ray, making it easier to verify that predicted positives align with plausible lung locations.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{figure/predicted.png}
+\caption{Predicted infection overlay on the input X-ray (highlighted region indicates predicted infected pixels).}
+\label{fig:overlay_pred}
+\end{figure}

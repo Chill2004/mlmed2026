@@ -1,0 +1,6 @@
+\section{Introduction}
+Chest X-ray (CXR) imaging is commonly used to support diagnosis and monitoring for lung diseases, including COVID-19. Many studies focus on classification (COVID vs non-COVID), but segmentation is also important because it gives a visual explanation: the model shows \textit{where} the infection is located.
+
+In this practical work, we build one deep learning model for infection segmentation on chest X-ray images. The task is binary segmentation: each pixel is either infection or background. We use the COVID-QU-Ex dataset and train a U-Net model to predict infection masks.
+
+To reduce the training time and storage cost, we only use the COVID-19 subset (COVID-19 images and their infection masks). This means our model is not trained to handle Normal or Non-COVID images. However, this setting is still useful for learning the infection region patterns among COVID-19 cases.

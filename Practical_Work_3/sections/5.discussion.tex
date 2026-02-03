@@ -1,0 +1,6 @@
+\section{Discussion}
+Overall, the training curves show that the model can learn useful patterns from COVID-19 chest X-rays. RMSE usually decreases during training, which means the predicted mask becomes closer to the ground truth.
+
+However, infection segmentation on chest X-ray is still difficult. First, infection regions often cover a small part of the image, so the background dominates most pixels. This class imbalance can make training unstable or slow. Second, the infection boundary is not always clear, even for humans. Some areas look similar to normal tissue or other structures like ribs. In these cases, the model may miss small infection regions or segment extra regions.
+
+Another limitation is our dataset choice. Since we only train on COVID-19 samples, our model is not designed to segment images from Non-COVID or Normal groups. This decision was made for practical reasons (dataset size and training time), but it reduces the scope of the model.
