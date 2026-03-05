@@ -1,0 +1,36 @@
+\section{Dataset}
+\subsection{LUNA16 overview}
+LUNA16 (LUng Nodule Analysis 2016) is a curated subset of LIDC-IDRI designed for standardized lung nodule detection evaluation~\cite{setio2017luna16}. The full LUNA16 dataset contains 888 CT scans with slice thickness constrained to allow robust 3D analysis. Nodules in the reference standard are those with diameter $\geq 3$ mm that achieve majority agreement among expert annotators.
+
+\subsection{Data format}
+Each scan is provided in MetaImage format: a header file (\texttt{.mhd}) and voxel data file (\texttt{.raw}). The \texttt{.mhd} file stores metadata such as voxel dimensions, physical spacing (mm), origin, and (optionally) direction/transform matrix. The CT values are stored as 16-bit integers and typically correspond to Hounsfield Units (HU).
+
+\subsection{Annotations}
+We use \texttt{annotations.csv} from LUNA16 which provides:
+\begin{itemize}
+  \item \texttt{seriesuid}: unique scan identifier
+  \item \texttt{coordX, coordY, coordZ}: nodule center in world coordinates (mm)
+  \item \texttt{diameter\_mm}: nodule diameter in mm
+\end{itemize}
+To align annotations with the voxel grid, world coordinates are converted to voxel indices using image origin, spacing, and direction (we use SimpleITK physical-to-index transforms in code).
+
+\subsection{Subset used in this practical work}
+Due to compute limits, we trained and evaluated on a small subset of the full dataset that we downloaded locally. Table~\ref{tab:subset} summarizes our subset. 
+
+\begin{table}[H]
+\centering
+\caption{Local LUNA16 subset used in this work (fill in).}
+\label{tab:subset}
+\begin{tabular}{lcc}
+\toprule
+Item & Count & Notes \\
+\midrule
+CT scans downloaded & \textbf{12} & From LUNA16 subsets \\
+Annotated nodules in subset & \textbf{14} & From \texttt{annotations.csv} \\
+Voxel spacing range (mm) & \textbf{0.488--2.500} & Before resampling \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Preprocessing}
+We clip HU values to $[-1000, 400]$ and normalize to $[0,1]$. Optionally, we resample scans to isotropic spacing (1.0 mm) to standardize patch geometry. A coarse lung mask is created using HU thresholding (HU $<-400$) and connected-component filtering.

@@ -1,0 +1,10 @@
+\section{Conclusion and future work}
+We implemented a complete volumetric (3D) pulmonary nodule detection pipeline on LUNA16 CT scans using a single learning model (3D CNN) for false-positive reduction. The system processes full volumes, generates candidates, predicts confidence scores, and exports 3D detections.
+
+Future improvements include:
+\begin{itemize}
+  \item More robust candidate generation (multi-scale, learned proposals)
+  \item Stronger 3D backbones (ResNet-style blocks, multi-scale feature extraction)
+  \item Hard negative mining to reduce vessel-related false positives
+  \item Training on the full 888-scan LUNA16 set with official evaluation code
+\end{itemize}

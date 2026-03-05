@@ -1,0 +1,77 @@
+\section{Results}
+\subsection{Experimental setup}
+Table~\ref{tab:trainsetup} lists our default training settings. (Fill with your actual values from the notebook/script.)
+
+\begin{table}[H]
+\centering
+\caption{Training setup (fill in).}
+\label{tab:trainsetup}
+\begin{tabular}{lc}
+\toprule
+Parameter & Value \\
+\midrule
+Patch size $P$ & \textbf{48} \\
+Resampling & \textbf{Yes} (target spacing: \textbf{1.0 mm isotropic}) \\
+Candidates per scan $K$ & \textbf{400} \\
+Batch size & \textbf{8} \\
+Epochs & \textbf{8} \\
+Optimizer & Adam ($\text{lr}=\textbf{1e-3}$) \\
+Threshold $\tau$ & \textbf{0.5} \\
+NMS distance & \textbf{10.0 mm} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Patch classification metrics (false-positive reduction model)}
+To better understand the quality of the 3D CNN classifier used in our detection pipeline, we evaluate it as a binary patch classifier. We use a decision threshold of 0.5 (sigmoid probability). The validation set contains 12 patches in total.
+
+Table~\ref{tab:cls_metrics} reports standard classification metrics. The results show that the model achieves perfect recall (no missed positive patches), but the precision is lower because there is still one false positive. This behavior is often acceptable in detection because missing nodules is usually more serious than producing a small number of additional candidates.
+
+\begin{table}[H]
+\centering
+\caption{Patch classification performance at threshold 0.5 (validation).}
+\label{tab:cls_metrics}
+\begin{tabular}{lc}
+\toprule
+Metric & Value \\
+\midrule
+Accuracy & 0.8333 \\
+Precision & 0.6667 \\
+Recall (Sensitivity) & 1.0000 \\
+F1-score & 0.8000 \\
+Specificity & 0.7500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Confusion matrix at threshold 0.5 (validation patches).}
+\label{tab:confusion}
+\begin{tabular}{lcc}
+\toprule
+ & Pred 0 & Pred 1 \\
+\midrule
+True 0 & 7 & 1 \\
+True 1 & 0 & 4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.70\linewidth]{confusion_matrix_thr05.png}
+\caption{Confusion matrix of the patch classifier at threshold 0.5.}
+\label{fig:cm}
+\end{figure}
+
+\noindent\textbf{} 
+
+Figure~\ref{fig:train_curve} shows the training and validation loss over 8 epochs using \texttt{BCEWithLogitsLoss}. Overall, both curves go down, which means the 3D CNN learns useful patterns from the patches. The validation loss decreases strongly at the last epoch and ends below the training loss, suggesting that the model generalizes reasonably well on this split. We also observe a small instability around epochs 5--6 where the validation loss increases while the training loss continues to decrease. This behaviour is common when the validation set is small or when the model starts to fit specific training samples. In practice, this indicates that early stopping or stronger regularization (more negative samples, augmentation, or weight decay) could make training more stable.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.70\linewidth]{training_curve.png}
+\caption{Training and validation loss over 8 epochs using BCEWithLogitsLoss.}
+\label{fig:train_curve}
+\end{figure}

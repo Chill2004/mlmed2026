@@ -1,0 +1,48 @@
+\section{Methods}
+\subsection{Problem formulation}
+Given a CT volume, the goal is to output a set of detections
+\[
+\mathcal{D}=\{(x_i,y_i,z_i,s_i)\}_{i=1}^{M}
+\]
+where $(x_i,y_i,z_i)$ is the predicted nodule center in world coordinates (mm) and $s_i \in [0,1]$ is a confidence score.
+
+\subsection{Pipeline overview}
+We implement a two-stage baseline:
+\begin{enumerate}
+  \item \textbf{Candidate generation:} generate many suspicious 3D locations from the full volume with high sensitivity.
+  \item \textbf{False-positive reduction (ONE deep model):} a 3D CNN classifies cubic patches centered at candidates as nodule / non-nodule.
+\end{enumerate}
+Although the system contains two stages, only \emph{one} learning model is used (the 3D CNN). Candidate generation is a deterministic image processing step.
+
+\subsection{Candidate generation}
+We generate candidates inside a coarse lung mask. Candidate points are obtained by applying a Laplacian-of-Gaussian (LoG) blob response (SciPy implementation) and non-maximum suppression to keep local maxima. We keep at most $K$ candidates per scan ($K=250$).
+
+\subsection{3D CNN model}
+We use a lightweight 3D CNN for binary classification of 3D patches of size $P\times P\times P$:
+\begin{itemize}
+  \item Conv3D(1$\rightarrow$16) + ReLU + MaxPool
+  \item Conv3D(16$\rightarrow$32) + ReLU + MaxPool
+  \item Conv3D(32$\rightarrow$64) + ReLU
+  \item Global average pooling + Linear(64$\rightarrow$1)
+\end{itemize}
+The network outputs a logit, trained with BCEWithLogitsLoss. At inference, sigmoid converts logits to probabilities.
+
+\subsection{Training data construction}
+Positive samples are patches centered at annotated nodules; we apply small random jitter (few voxels) to increase robustness. Negative samples are patches sampled from lung regions away from annotated centers. Class imbalance is handled by sampling multiple negatives per positive and/or using \texttt{pos\_weight}.
+
+\subsection{Inference and post-processing}
+For each scan:
+\begin{enumerate}
+  \item Generate candidates $\{c_j\}_{j=1}^{K}$
+  \item Extract patches and compute scores $s_j$
+  \item Keep detections with $s_j \ge \tau$
+  \item Merge close detections using greedy NMS in mm distance (e.g., 10 mm)
+  \item Convert voxel indices back to world coordinates and export detections to CSV
+\end{enumerate}
+
+\subsection{Evaluation}
+LUNA16 uses FROC analysis; the common summary score CPM is the average sensitivity at predefined false positive rates per scan: $\{0.125, 0.25, 0.5, 1, 2, 4, 8\}$~\cite{setio2017luna16}. In this practical work, we implement a simplified CPM approximation on our subset:
+\begin{itemize}
+  \item A detection is matched to a ground truth nodule if within a radius proportional to diameter (at least a small floor in mm).
+  \item Unmatched detections count as false positives.
+\end{itemize}.

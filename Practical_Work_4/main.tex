@@ -1,0 +1,57 @@
+%============================================================
+% main.tex — IEEEtran split template (PW4 LUNA16 Detection)
+%============================================================
+\documentclass[conference]{IEEEtran}
+
+% -------------------- Packages --------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{cite}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+% Put your figures in /figure
+\graphicspath{{figure/}}
+
+\title{Pulmonary Nodule Detection in CT Scans\\
+A Baseline Volumetric (3D) Detector on LUNA16}
+
+\author{
+\IEEEauthorblockN{Nugyen The Cuong}
+\IEEEauthorblockN{22BA13058}
+\IEEEauthorblockA{
+Computed Tomography / Machine Learning in Medicine 2026\\
+University of Science and Technology of Hanoi (USTH)\\
+Email: cuongnt.22ba13058@usth.edu.vn
+}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+
+\begin{document}
+\maketitle
+
+\input{sections/abstract}
+
+\input{sections/1.introduction}
+\input{sections/2.dataset}
+\input{sections/3.methods}
+\input{sections/4.results}
+\input{sections/5.discussion}
+\input{sections/6.conclusion and future work}
+
+\input{sections/references}
+
+\end{document}

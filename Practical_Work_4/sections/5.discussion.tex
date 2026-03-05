@@ -1,0 +1,23 @@
+\section{Discussion}
+\subsection{Why our baseline is weaker than the leaderboard}
+Our results are expected to be below leaderboard performance due to:
+\begin{itemize}
+  \item \textbf{Small subset training:} fewer scans reduces generalization.
+  \item \textbf{Simplified candidate generation:} LoG peak detection may miss complex nodules or generate many false positives.
+  \item \textbf{Lightweight 3D CNN:} limited capacity compared to modern multi-scale 3D architectures.
+  \item \textbf{Approximate evaluation:} our simplified CPM differs from official LUNA16 scoring rules.
+\end{itemize}
+
+\subsection{Failure cases}
+Common errors we observed:
+\begin{itemize}
+  \item \textbf{False positives} near vessels, airway walls, or pleura (high-contrast structures).
+  \item \textbf{Missed small nodules} when candidate generation fails (low-contrast regions).
+  \item \textbf{Close detections} merged incorrectly if NMS distance is too large.
+\end{itemize}
+
+\subsection{Effect of hyperparameters}
+Patch size affects context: larger patches capture more anatomy but may dilute signal; threshold $\tau$ trades off FP/scan and sensitivity. Candidate limit $K$ influences runtime and maximum sensitivity.
+
+\subsection{Interpretation of classification metrics}
+On the validation set, the patch classifier achieves recall of 1.000 and F1-score of 0.800 at threshold 0.5. This means the model did not miss any positive patch in this split. However, precision is 0.6667 because one negative patch is predicted as positive. In the detection pipeline, this type of error increases false positives, so more post-processing or stronger negative sampling (hard negatives near vessels) could improve precision.

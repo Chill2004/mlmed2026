@@ -1,0 +1,5 @@
+\begin{abstract}
+This report presents Practical Work 4: pulmonary nodule detection from CT scans using a small local subset of LUNA16. The task is volumetric (3D) detection, meaning the system must process a full CT volume and output 3D nodule locations with confidence scores.
+
+We implement a simple baseline pipeline. First, we generate candidate points inside the lung region using basic image processing. Then, we use one deep learning model (a lightweight 3D CNN) to classify 3D patches around these candidates and reduce false positives. Besides detection-level evaluation, we also report patch-classification performance of the CNN. On a validation set at threshold 0.5, the classifier reaches 0.833 accuracy and an F1-score of 0.800, with recall of 1.000. We discuss typical errors and show how hyperparameters such as patch size and threshold affect results.
+\end{abstract}
